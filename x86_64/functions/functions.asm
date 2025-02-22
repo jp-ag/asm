@@ -68,12 +68,12 @@ sprintLF:
 ; int printing function
 iprint:
     push    rax
-    push    rcx
+    push    rbx
     push    rdx
     push    rsi
-    mov     rcx, 0  ;; counter
+    mov     rbx, 0  ;; counter
 .divideLoop:
-    inc     rcx
+    inc     rbx
     mov     rdx, 0
     mov     rsi, 10
     idiv    rsi
@@ -82,16 +82,16 @@ iprint:
     cmp     rax, 0
     jnz     .divideLoop
 .printLoop:
-    dec     rcx
+    dec     rbx
     mov     rax, rsp
     call    sprint
     pop     rax
-    cmp     rcx, 0
+    cmp     rbx, 0
     jnz     .printLoop
 
     pop     rsi
     pop     rdx
-    pop     rcx
+    pop     rbx
     pop     rax
     ret
 

@@ -4,12 +4,10 @@ section .text
     global _start
 
 _start:
-    mov     rax, 10
-    call    iprint
+    mov     rax, 0
+.printLoop:
+    inc     rax
+    call    iprintLF
+    cmp     rax, 10
+    jne     .printLoop
     call    exit
-;.printLoop:
-;    inc     rax
-;    call    iprint
-;    cmp     rax, 10
-;    jne     .printLoop
-;    call    exit
