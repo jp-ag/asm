@@ -32,6 +32,8 @@ sprint:
     push    rdx
     push    rdi
     push    rsi
+    push    rcx ;; rcx and r11 need to be saved because
+    push    r11 ;; `syscall` overwrites them
     push    rax ; store string address
 
     call    slen
@@ -41,6 +43,8 @@ sprint:
     mov     rdi, 1
     syscall
 
+    pop     r11
+    pop     rcx
     pop     rsi
     pop     rdi
     pop     rdx
@@ -68,12 +72,12 @@ sprintLF:
 ; int printing function
 iprint:
     push    rax
-    push    rbx
+    push    rcx
     push    rdx
     push    rsi
-    mov     rbx, 0  ;; counter
+    mov     rcx, 0  ;; counter
 .divideLoop:
-    inc     rbx
+    inc     rcx
     mov     rdx, 0
     mov     rsi, 10
     idiv    rsi
@@ -82,16 +86,16 @@ iprint:
     cmp     rax, 0
     jnz     .divideLoop
 .printLoop:
-    dec     rbx
+    dec     rcx
     mov     rax, rsp
     call    sprint
     pop     rax
-    cmp     rbx, 0
+    cmp     rcx, 0
     jnz     .printLoop
 
     pop     rsi
     pop     rdx
-    pop     rbx
+    pop     rcx
     pop     rax
     ret
 
