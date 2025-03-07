@@ -68,7 +68,7 @@ sprintLF:
 
 
 ;------------------------------------------
-; void iprint(inr num)
+; void iprint(int num)
 ; int printing function
 iprint:
     push    rax
@@ -100,7 +100,7 @@ iprint:
     ret
 
 ;------------------------------------------
-; void iprintLF(inr num)
+; void iprintLF(int num)
 ; int printing function
 iprintLF:
     call    iprint
