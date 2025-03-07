@@ -63,7 +63,7 @@ sprintLF:
     ret
 
 ;------------------------------------------
-; void iprint(inr num)
+; void iprint(int num)
 ; int printing function
 iprint:
     push    eax
@@ -97,7 +97,7 @@ iprint:
 
 ;------------------------------------------
 ; void iprintLF(int num)
-; inr printing with line feed function
+; int printing with line feed function
 iprintLF:
     call    iprint
 
@@ -109,3 +109,46 @@ iprintLF:
     pop     eax
     pop     eax
     ret
+
+
+
+;------------------------------------------
+; int atoi(str num) 
+; convert string num to int. Ignore until non-num chars
+atoi: 
+	push	ecx
+	push	ebx
+	push	esi
+	push	edx				; check line 136
+	mov		esi, eax		; move string pointer to esi
+	mov		eax, 0	
+	mov		ecx, 0
+.multiplyLoop:	
+	xor		ebx, ebx		; clean ebx lower and upper bits to 0
+	mov		bl, [esi+ecx]	; get first char into ebx lower bits
+	cmp     bl, 48	; make sure we have the char within our ascii number range
+	jl		.finish
+    cmp     bl, 57
+    jg		.finish
+	sub		bl, 48			; make char into num	
+	add		eax, ebx
+	mov		ebx, 10
+	mul		ebx				; remember that mul sends remainder to edx
+	inc		ecx
+	jmp		.multiplyLoop
+.skipChar:
+	cmp		bl, 0 			; is the string over or can we skip this char
+	je		.finish
+	inc		ecx
+	jmp		.multiplyLoop
+.finish:
+	cmp		ecx, 0  		; means no integer value passed to atoi
+	je		.restore		
+	mov		ebx, 10			; cleanup for extra mult by 10
+	div		ebx
+.restore:
+	pop		edx
+	pop		esi
+	pop		ebx
+	pop		ecx
+	ret
