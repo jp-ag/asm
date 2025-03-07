@@ -112,3 +112,40 @@ iprintLF:
     pop     rax
     pop     rax
     ret
+
+
+;------------------------------------------
+; int atoi(str num) 
+; convert string num to int. Ignore non num chars
+atoi:
+	push	rbx
+	push	rdx
+	push	rsi
+	push	rcx
+	mov		rsi, rax	; get pointer to string
+	mov		rax, 0
+	mov		rcx, 0
+.nextByte:
+	xor		rbx, rbx	; clean lower and upper bytes
+	mov		bl, [rsi+rcx] ; get first byte
+	cmp		bl, 48		; check if within 0-9 range
+	jl		.finish
+	cmp		bl, 57
+	jg		.finish
+	sub		bl, 48
+	add		rax, rbx 
+	mov		rbx, 10
+	mul		rbx
+	inc		rcx
+	jmp		.nextByte
+.finish:
+	cmp		rcx, 0
+	je		.restore
+	mov		rbx, 10
+	div		rbx
+.restore:
+	pop		rcx
+	pop		rsi
+	pop		rdx
+	pop		rbx
+	ret
