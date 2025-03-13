@@ -12,4 +12,12 @@ nasm -f elf -o hello_elf32.o hello_elf32.asm
 ld -m elf_i386 -o hello_elf32 hello_elf32.o
 ./hello_elf32
 ```
-for building, linking and executing x86 x86
+for building, linking and executing x86 x86.
+
+Add `-g` in nasm for debug options. Start debugging with
+
+```
+gdb ./program
+```
+Use `lay next` to enter assembly view and set a break point like `b _start`. Start the program with `run` and go to the next instruction with `next/nexti`. Check the information on the registers with `info registers/info register rax/eax`.
+
